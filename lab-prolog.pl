@@ -60,8 +60,8 @@ min(X, X, X).
 
 min_max_list(cons(H, T), MN, MX) :- min_max_list(T, H, H, MN, MX).
 min_max_list(nil, AMN, AMX, AMN, AMX).
-min_max_list(cons(H, T), AMN, AMX, RMN, RMX) :- min(AMN, H, H), !, min_max_list(T, H, AMX, RMN, RMX).
-min_max_list(cons(H, T), AMN, AMX, RMN, RMX) :- max(AMX, H, H), !, min_max_list(T, AMN, H, RMN, RMX).
+min_max_list(cons(H, T), AMN, AMX, RMN, RMX) :- min(AMN, H, H), min_max_list(T, H, AMX, RMN, RMX).
+min_max_list(cons(H, T), AMN, AMX, RMN, RMX) :- max(AMX, H, H), min_max_list(T, AMN, H, RMN, RMX).
 min_max_list(cons(H, T), AMX, AMX, RMN, RMX) :- min_max_list(T, AMX, AMN, RMN, RMX).
 
 % same (List1 , List2 )
@@ -77,7 +77,7 @@ all_bigger(cons(H, T), cons(H2, T2)) :- greater(H, H2), all_bigger(T, T2).
 % sublist (List1 , List2 )
 % List1 should contain elements all also in List2
 sublist(nil, L).
-sublist(cons(H, T), L) :- search(H, L), !, sublist(T, L).
+sublist(cons(H, T), L) :- search(H, L), sublist(T, L).
 
 % seq(N,E, List ) --> List is [E,E ,... ,E] with size N
 % example : seq (s(s(s( zero ))), a, cons (a, cons (a, cons (a, nil )))).
@@ -92,9 +92,3 @@ seqR(s(N), cons(N, T)) :- seqR(N, T).
 range(E, E, nil).
 range(S, E, cons(S, T)) :- range(s(S), E, T).
 seqR2(N, R) :- range(zero, N, R).
-
-
-
-
-
-
